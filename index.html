@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.5/dist/tailwind.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+    <div class="calculator max-w-md mx-auto mt-8 bg-white rounded-lg overflow-hidden animated">
+        <div class="calculator-header bg-blue-500 text-white">
+            <h1 class="text-lg font-bold">Calculator</h1>
+        </div>
+        <div class="calculator-body p-4">
+            <input type="date" id="input1" class="calculator-input mb-2" placeholder="Enter date">
+            <input type="date" id="input2" class="calculator-input mb-2" placeholder="Enter customer date">
+            <button id="calculateBtn" class="calculator-button">Calculate</button>
+        </div>
+        <div class="calculator-output p-4">
+            <p id="output" class="text-gray-600"></p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date as default value for input1
+        document.getElementById('input1').value = new Date().toISOString().substr(0, 10);
+
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            var input1 = document.getElementById('input1').value;
+            var input2 = document.getElementById('input2').value;
+
+            // Check if input fields have valid date values
+            if (!input1 || !input2) {
+                alert('Please select both dates.');
+                return;
+            }
+
+            // Calculate the time difference in milliseconds
+            var timeDifference = Math.abs(new Date(input1) - new Date(input2));
+
+            // Calculate years, months, and days difference
+            var yearsDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+            timeDifference -= yearsDifference * (1000 * 60 * 60 * 24 * 365);
+            var monthsDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30));
+            timeDifference -= monthsDifference * (1000 * 60 * 60 * 24 * 30);
+            var daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+            // Update the output
+            document.getElementById('output').textContent = `  ${yearsDifference}-Years,
+                  ${monthsDifference}-Month,  ${daysDifference}- Day.`
+        });
+    </script>
+</body>
+</html>
